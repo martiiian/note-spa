@@ -22,7 +22,7 @@ export default {
   height: 100vh;
   position: fixed;
   background: rgba(113, 113, 113, 0.76);
-  //display: flex;
+  z-index: 100;
 }
 
 .modal {

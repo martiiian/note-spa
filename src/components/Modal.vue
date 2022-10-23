@@ -1,0 +1,43 @@
+<template>
+  <div class="modal-wrapper">
+    <div class="modal">
+      <button class="modal__close-btn" @click="$emit('close')">
+        x
+      </button>
+
+      <slot />
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  emits: ['close']
+}
+</script>
+
+<style lang="scss">
+.modal-wrapper {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: rgba(113, 113, 113, 0.76);
+  //display: flex;
+}
+
+.modal {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: white;
+  position: relative;
+  padding: 20px;
+
+  &__close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
+</style>

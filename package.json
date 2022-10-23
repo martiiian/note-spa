@@ -3,5 +3,18 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "martiiian <jkramorevx@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel src/index.html",
+    "build": "parcel build src/index.html"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.7.0",
+    "@parcel/transformer-vue": "2.7.0",
+    "parcel": "^2.7.0"
+  },
+  "dependencies": {
+    "vue": "^3.2.41",
+    "vuex": "^4.1.0"
+  }
 }

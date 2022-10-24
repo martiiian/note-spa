@@ -10,6 +10,8 @@
     />
   </Modal>
 
+  <AreYouSure ref="areYouSure" />
+
   <div class="app">
     <button class="app__create-note-btn btn" @click="toggleCreateModal">
       Создать заметку
@@ -24,6 +26,7 @@
         @deleteChild="deleteChild"
         @editChild="editChild"
         @createChild="createChild"
+        @complete="complete"
       />
     </div>
 
@@ -41,15 +44,17 @@ import NoteCreateForm from './NoteCreateForm'
 import '~/src/assets/styles/common.scss'
 import Modal from './Modal'
 import NoteUpdateForm from './NoteUpdateForm'
+import AreYouSure from './AreYouSure'
 
 export default {
-  components: { NoteUpdateForm, Modal, NoteCreateForm, Note },
+  components: {AreYouSure, NoteUpdateForm, Modal, NoteCreateForm, Note },
 
   setup() {
     const store = useStore()
     const createModalIsOpen = ref(false)
     const editableItem = ref(null)
     const parentForCreate = ref(null)
+    const areYouSure = ref(null)
 
     function createChild(parent) {
       parentForCreate.value = parent
@@ -69,7 +74,12 @@ export default {
     }
 
     function deleteChild(item) {
-      store.commit('subNotes/delete', item)
+      areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}"?`)
+        .then((isDelete) => {
+          if (isDelete) {
+            store.commit('subNotes/delete', item)
+          }
+        })
     }
 
     function editChild(item) {
@@ -77,12 +87,31 @@ export default {
     }
 
     function deleteNote(item) {
-      store.commit('notes/delete', item)
-      store.commit('subNotes/deleteByParent', item)
+      areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
+        .then((isDelete) => {
+          if (isDelete) {
+            store.commit('notes/delete', item)
+            store.commit('subNotes/deleteByParent', item)
+          }
+        })
     }
 
     function edit(item) {
       editableItem.value = item
+    }
+
+    function complete(item) {
+      if (item.parent) {
+        store.commit('subNotes/update', {
+          ...item,
+          isComplete: true
+        })
+      } else {
+        store.commit('notes/update', {
+          ...item,
+          isComplete: true
+        })
+      }
     }
 
     function notesWithChildren() {
@@ -93,6 +122,7 @@ export default {
     }
 
     return {
+      complete,
       createChild,
       deleteChild,
       deleteNote,
@@ -103,7 +133,8 @@ export default {
       notesWithChildren: computed(notesWithChildren),
       createModalIsOpen,
       editableItem,
-      parentForCreate
+      parentForCreate,
+      areYouSure
     }
   }
 }

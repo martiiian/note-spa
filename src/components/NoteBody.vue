@@ -1,5 +1,8 @@
 <template>
-  <div class="note-body" :class="{ 'note-body_is-child': isChild }">
+  <div
+    class="note-body"
+    :class="{ 'note-body_is-child': isChild, 'note-body_is-complete': isComplete }"
+  >
     <div class="note-body__top">
       <div class="note-body__title">
         {{ title }}
@@ -46,6 +49,10 @@ export default {
       required: true
     },
     isChild: {
+      type: Boolean,
+      default: false
+    },
+    isComplete: {
       type: Boolean,
       default: false
     }
@@ -113,6 +120,10 @@ export default {
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
     }
+  }
+
+  &_is-complete {
+    background: #bdbdbd;
   }
 }
 </style>

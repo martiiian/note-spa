@@ -3,8 +3,10 @@
     <NoteBody
       :description="note.description"
       :title="note.title"
+      :is-complete="note.isComplete"
       @delete="$emit('delete', note)"
       @edit="$emit('edit', note)"
+      @complete="$emit('complete', note)"
       @createChild="$emit('createChild', note)"
     />
 
@@ -14,7 +16,9 @@
         :key="subNote.id"
         :description="subNote.description"
         :title="subNote.title"
+        :is-complete="note.isComplete || subNote.isComplete"
         is-child
+        @complete="$emit('complete', subNote)"
         @delete="$emit('deleteChild', subNote)"
         @edit="$emit('editChild', subNote)"
       />
@@ -34,15 +38,19 @@ export default {
 
   props: {
     note: {
-      type: Object
+      type: Object,
+      required: true
     }
   },
 
-  emits: ['edit', 'delete', 'editChild', 'deleteChild', 'createChild'],
-
-  setup(props) {
-
-  }
+  emits: [
+    'edit',
+    'delete',
+    'editChild',
+    'deleteChild',
+    'createChild',
+    'complete'
+  ],
 }
 </script>
 

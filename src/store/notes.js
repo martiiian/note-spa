@@ -1,5 +1,5 @@
 import all from '~/src/data/notes.json'
-import { getUniqueId } from '../helpers/common'
+import { mutations } from '../helpers/store/mutations'
 
 export default {
   namespaced: true,
@@ -9,18 +9,6 @@ export default {
   }),
 
   mutations: {
-    delete(state, item) {
-      state.all = state.all.filter((i) => i.id !== item.id)
-    },
-
-    create(state, data) {
-      const id = getUniqueId(state.all)
-
-      state.all.push({
-        ...data,
-        isComplete: false,
-        id
-      })
-    },
+    ...mutations,
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <NoteForm
-    :title="title"
-    :description="description"
+    :title="item.title"
+    :description="item.description"
     button-name="Обновить"
     @submit="update"
   />
@@ -10,26 +10,37 @@
 <script>
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
+import { useStore } from 'vuex'
 
 export default {
   components: { NoteForm },
 
   props: {
-    title: {
-      type: String,
+    item: {
+      type: Object,
       required: true
     },
-
-    description: {
-      type: String,
-      required: true
-    }
   },
 
-  setup() {
+  setup(props, { emit }) {
+    const store = useStore()
+
     function update(e) {
-      const formData = new FormData(e.target);
-      this.$emit('update', convertFormDataToObject(formData))
+      const formData = convertFormDataToObject(new FormData(e.target));
+
+      if (props.parent) {
+        store.commit('subNotes/update', {
+          ...props.item,
+          ...formData,
+        })
+      } else {
+        store.commit('notes/update', {
+          ...props.item,
+          ...formData,
+        })
+      }
+
+      emit('updated')
     }
 
     return {

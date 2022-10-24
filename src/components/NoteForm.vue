@@ -1,9 +1,10 @@
 <template>
-  <form class="note-form" @submit.prevent="$emit('submit', $event)">
+  <form class="note-form" @submit.prevent="submit">
     <div class="note-form__group">
       <label for="note-create-form_title">
         Заголовок:
       </label>
+
       <input
         id="note-create-form_title"
         class="note-form__input"
@@ -17,12 +18,20 @@
       <label for="note-create-form_description">
         Описание:
       </label>
+
       <textarea
         id="note-create-form_description"
         class="note-form__input"
         name="description"
         :value="description"
       />
+    </div>
+
+
+    <div v-show="error" class="note-form__group">
+      <div class="note-form__error">
+        Заполните все поля!
+      </div>
     </div>
 
     <div class="note-form__group">
@@ -34,6 +43,9 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import {convertFormDataToObject} from '../helpers/common'
+
 export default {
   props: {
     description: {
@@ -52,7 +64,31 @@ export default {
     }
   },
 
-  emits: ['submit']
+  emits: ['submit'],
+
+  setup(props, { emit }) {
+    let error = ref(false)
+
+    function validate(e) {
+      error.value = false
+      const formData = convertFormDataToObject(new FormData(e.target));
+
+      return !Object.values(formData).some((i) => i === '')
+    }
+
+    function submit(e) {
+      if (validate(e)) {
+        emit('submit', e)
+      } else {
+        error.value = true
+      }
+    }
+
+    return {
+      submit,
+      error,
+    }
+  }
 }
 </script>
 

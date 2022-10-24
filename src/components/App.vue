@@ -4,10 +4,7 @@
   </Modal>
 
   <Modal v-if="editableItem" @close="removeEditableItem">
-    <NoteUpdateForm
-      :description="editableItem.description"
-      :title="editableItem.title"
-    />
+    <NoteUpdateForm :item="editableItem" @updated="removeEditableItem" />
   </Modal>
 
   <AreYouSure ref="areYouSure" />

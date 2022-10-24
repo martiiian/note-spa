@@ -5,6 +5,7 @@
       :title="note.title"
       @delete="$emit('delete', note)"
       @edit="$emit('edit', note)"
+      @createChild="$emit('createChild', note)"
     />
 
     <div v-if="note.subNotes.length" class="note__sub-notes">
@@ -37,7 +38,7 @@ export default {
     }
   },
 
-  emits: ['edit', 'delete', 'editChild', 'deleteChild'],
+  emits: ['edit', 'delete', 'editChild', 'deleteChild', 'createChild'],
 
   setup(props) {
 
@@ -47,7 +48,7 @@ export default {
 
 <style lang="scss">
 .note {
-  margin: 10px 5px;
+  margin: 10px 0;
   &__sub-notes {
     padding-left: 20px;
     padding-right: 5px;

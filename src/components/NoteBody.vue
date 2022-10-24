@@ -9,21 +9,21 @@
         <button
           v-if="!isChild"
           class="note-body__complete note-body__button"
-          @click="$emit('complete')"
+          @click="$emit('createChild')"
         >
-          add
+          <img :src="require('~/src/assets/images/add.svg')" alt="add child" />
         </button>
 
         <button class="note-body__complete note-body__button" @click="$emit('complete')">
-          complete
+          <img :src="require('~/src/assets/images/check.svg')" alt="complete" />
         </button>
 
         <button class="note-body__del note-body__button" @click="$emit('delete')">
-          del
+          <img :src="require('~/src/assets/images/delete.svg')" alt="delete" />
         </button>
 
         <button class="note-body__edit note-body__button" @click="$emit('edit')">
-          edit
+          <img :src="require('~/src/assets/images/edit.svg')" alt="edit" />
         </button>
       </div>
     </div>
@@ -49,7 +49,9 @@ export default {
       type: Boolean,
       default: false
     }
-  }
+  },
+
+  emits: ['createChild', 'complete', 'delete', 'edit']
 }
 </script>
 
@@ -68,6 +70,19 @@ export default {
 
   &__button {
     cursor: pointer;
+    background: none;
+    border: none;
+    margin-left: 10px;
+    transition: 0.3s opacity ease-in-out;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    img {
+      height: 15px;
+      width: 15px;
+    }
   }
 
   &:hover {

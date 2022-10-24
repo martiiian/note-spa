@@ -1,6 +1,6 @@
 <template>
   <Modal v-if="createModalIsOpen" @close="toggleCreateModal">
-    <NoteCreateForm :parent="parentForCreate" />
+    <NoteCreateForm :parent="parentForCreate" @created="toggleCreateModal" />
   </Modal>
 
   <Modal v-if="editableItem" @close="removeEditableItem">
@@ -10,8 +10,10 @@
     />
   </Modal>
 
-  <div class="notes">
-    <button @click="toggleCreateModal">Создать заметку</button>
+  <div class="app">
+    <button class="app__create-note-btn btn" @click="toggleCreateModal">
+      Создать заметку
+    </button>
 
     <div v-if="notesWithChildren.length" class="notes">
       <Note
@@ -51,6 +53,7 @@ export default {
 
     function createChild(parent) {
       parentForCreate.value = parent
+      toggleCreateModal()
     }
 
     function removeEditableItem() {
@@ -58,7 +61,7 @@ export default {
     }
 
     function toggleCreateModal() {
-      if (createModalIsOpen) {
+      if (createModalIsOpen.value) {
         parentForCreate.value = null
       }
 
@@ -105,3 +108,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.app {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  &__create-note-btn {
+    align-self: flex-end;
+  }
+}
+</style>

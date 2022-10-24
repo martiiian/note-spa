@@ -1,25 +1,19 @@
 <template>
-  <form class="note-create-form" @submit="update">
-    <label>
-      <p>Заголовок:</p>
-      <input type="text" name="title" :value="title">
-    </label>
-
-    <label>
-      <p>Описание:</p>
-      <input type="text" name="description" :value="description">
-    </label>
-
-    <div>
-      <button>Обновить</button>
-    </div>
-  </form>
+  <NoteForm
+    :title="title"
+    :description="description"
+    button-name="Обновить"
+    @submit="update"
+  />
 </template>
 
 <script>
+import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
 
 export default {
+  components: { NoteForm },
+
   props: {
     title: {
       type: String,
@@ -34,7 +28,6 @@ export default {
 
   setup() {
     function update(e) {
-      e.preventDefault();
       const formData = new FormData(e.target);
       this.$emit('update', convertFormDataToObject(formData))
     }
@@ -45,9 +38,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.note-create-form {
-
-}
-</style>

@@ -8,7 +8,10 @@
         {{ title }}
       </div>
 
-      <div class="note-body__buttons">
+      <div
+        class="note-body__buttons"
+        :class="{ 'note-body__buttons_active': menuIsOpen }"
+      >
         <button
           v-if="!isChild"
           class="note-body__complete note-body__button"
@@ -29,6 +32,13 @@
           <img :src="require('~/src/assets/images/edit.svg')" alt="edit" />
         </button>
       </div>
+
+      <button
+        class="note-body__button note-body__button_mobile-options"
+        @click="toggleMenu"
+      >
+        <img :src="require('~/src/assets/images/menu.svg')" alt="edit" />
+      </button>
     </div>
 
     <div class="note-body__description">
@@ -38,6 +48,8 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
   props: {
     title: {
@@ -58,22 +70,60 @@ export default {
     }
   },
 
-  emits: ['createChild', 'complete', 'delete', 'edit']
+  emits: ['createChild', 'complete', 'delete', 'edit'],
+
+  setup() {
+    const menuIsOpen = ref(false)
+
+    function toggleMenu() {
+      menuIsOpen.value = !menuIsOpen.value
+    }
+
+    return {
+      toggleMenu,
+      menuIsOpen,
+    }
+  }
 }
 </script>
 
 <style lang="scss">
 .note-body {
-  padding: 10px 5px;
+  padding: 10px 10px 10px 15px;
   width: 100%;
   background: #ffffff;
   border-radius: 5px;
   border: 1px solid #cbcbcb;
 
+  &:hover {
+    .note-body__buttons {
+      @media (min-width: 400px) {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
   &__buttons {
     opacity: 0;
+    visibility: hidden;
     transition: .3s ease-in;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    @media (max-width: 400px) {
+      opacity: 0;
+      visibility: visible;
+    }
+
+    &_active {
+      @media (max-width: 400px) {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
   }
+
 
   &__button {
     cursor: pointer;
@@ -90,26 +140,28 @@ export default {
       height: 15px;
       width: 15px;
     }
-  }
 
-  &:hover {
-    .note-body__buttons {
-      opacity: 1;
+    &_mobile-options {
+      display: none;
+      @media (max-width: 400px) {
+        display: block;
+      }
     }
   }
 
   &__top {
     display: flex;
     justify-content: space-between;
-    padding-left: 10px;
+    align-items: flex-start;
   }
 
   &__title {
     color: #1b3854;
+    flex-grow: 1;
   }
 
   &__description {
-
+    color: #a5a3a3;
   }
 
   &_is-child {

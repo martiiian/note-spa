@@ -10,7 +10,7 @@
         class="note-form__input"
         type="text"
         name="title"
-        :value="title"
+        v-model="titleLocal"
       />
     </div>
 
@@ -23,7 +23,7 @@
         id="note-create-form_description"
         class="note-form__input"
         name="description"
-        :value="description"
+        v-model="descriptionLocal"
       />
     </div>
 
@@ -44,7 +44,7 @@
 
 <script>
 import { ref } from 'vue'
-import {convertFormDataToObject} from '../helpers/common'
+import { convertFormDataToObject } from '../helpers/common'
 
 export default {
   props: {
@@ -68,6 +68,8 @@ export default {
 
   setup(props, { emit }) {
     let error = ref(false)
+    let descriptionLocal = ref(props.description)
+    let titleLocal = ref(props.title)
 
     function validate(e) {
       error.value = false
@@ -87,6 +89,8 @@ export default {
     return {
       submit,
       error,
+      descriptionLocal,
+      titleLocal
     }
   }
 }
@@ -105,6 +109,9 @@ export default {
   }
   &__input {
     padding: 8px;
+  }
+  &__error {
+    color: red;
   }
 }
 </style>

@@ -2,7 +2,7 @@
   <NoteForm @submit="create" />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
 import { useStore } from 'vuex'

@@ -1,14 +1,16 @@
 import all from '~/src/data/sub-notes.json'
-import { mutations } from '../helpers/store/mutations'
+import { mutations } from '../mutations'
+import { Module, MutationTree } from "vuex";
+import {RootState} from "@/store";
 
-export default {
+export default <Module<ListState, RootState>>{
   namespaced: true,
 
   state: () => ({
     all
   }),
   
-  mutations: {
+  mutations: <MutationTree<ListState>> {
     ...mutations,
 
     deleteByParent(state, parent) {

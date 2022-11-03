@@ -41,41 +41,42 @@
   </form>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
 import { convertFormDataToObject } from '../helpers/common'
+import { ref } from 'vue'
 
-const props = defineProps({
-  description: {
-    type: String,
-    default: ''
-  },
+interface Props {
+  description?: string
+  title?: string
+  buttonName?: string
+}
 
-  title: {
-    type: String,
-    default: ''
-  },
+interface Emits {
+  (e: 'submit', formData: SubmitEvent): void
+}
 
-  buttonName: {
-    type: String,
-    default: 'Создать'
-  }
+const props = withDefaults(defineProps<Props>(), {
+  description: '',
+  title: '',
+  buttonName: 'Создать'
 })
 
-const emit = defineEmits(['submit'])
+const emit = defineEmits<Emits>()
 
 let error = ref(false)
 let descriptionLocal = ref(props.description)
 let titleLocal = ref(props.title)
 
-function validate(e) {
+function validate(e: SubmitEvent) {
+  if (!e.target) return
+
   error.value = false
-  const formData = convertFormDataToObject(new FormData(e.target));
+  const formData = convertFormDataToObject(new FormData(e.target as HTMLFormElement));
 
   return !Object.values(formData).some((i) => i === '')
 }
 
-function submit(e) {
+function submit(e: SubmitEvent) {
   if (validate(e)) {
     emit('submit', e)
   } else {

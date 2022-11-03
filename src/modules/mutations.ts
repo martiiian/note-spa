@@ -1,6 +1,7 @@
-import { getUniqueId } from '../common'
+import { getUniqueId } from '../../src/helpers/common'
+import { MutationTree } from "vuex";
 
-export const mutations = {
+export const mutations: MutationTree<ListState> = {
   delete(state, item) {
     state.all = state.all.filter((i) => i.id !== item.id)
   },

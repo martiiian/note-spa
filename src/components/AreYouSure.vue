@@ -13,43 +13,58 @@
   </Modal>
 </template>
 
-<script setup>
+<script lang="ts">
 import { ref } from 'vue'
-import Modal from './Modal'
+import Modal from './Modal.vue'
 
-const text = ref('')
-const yesBtn = ref(null)
-const noBtn = ref(null)
+export default {
+  components: { Modal },
 
-function confirm(srcText) {
-  text.value = srcText
+  setup() {
+    const text = ref('')
+    const yesBtn = ref<HTMLButtonElement | null>(null)
+    const noBtn = ref<HTMLButtonElement | null>(null)
 
-  return new Promise((resolve) => {
-    function resetText() {
-      text.value = ''
+    function confirm(srcText: string): Promise<boolean> {
+      text.value = srcText
+
+      return new Promise((resolve) => {
+        function resetText() {
+          text.value = ''
+        }
+
+        function unsubscribe() {
+          yesBtn.value && yesBtn.value.removeEventListener('click', yesBtnCallback)
+          noBtn.value && noBtn.value.removeEventListener('click', yesBtnCallback)
+        }
+
+        function yesBtnCallback() {
+          unsubscribe()
+          resetText()
+          resolve(true)
+        }
+
+        function noBtnCallback() {
+          unsubscribe()
+          resetText()
+          resolve(false)
+        }
+
+        yesBtn.value && yesBtn.value.addEventListener('click', yesBtnCallback)
+        noBtn.value && noBtn.value.addEventListener('click', noBtnCallback)
+      })
     }
 
-    function unsubscribe() {
-      yesBtn.value.removeEventListener('click', yesBtnCallback)
-      noBtn.value.removeEventListener('click', yesBtnCallback)
+    return {
+      text,
+      yesBtn,
+      noBtn,
+      confirm
     }
-
-    function yesBtnCallback() {
-      unsubscribe()
-      resetText()
-      resolve(true)
-    }
-
-    function noBtnCallback() {
-      unsubscribe()
-      resetText()
-      resolve(false)
-    }
-
-    yesBtn.value.addEventListener('click', yesBtnCallback)
-    noBtn.value.addEventListener('click', noBtnCallback)
-  })
+  }
 }
+
+
 </script>
 
 <style lang="scss">

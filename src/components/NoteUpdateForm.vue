@@ -7,16 +7,22 @@
   />
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import NoteForm from './NoteForm.vue'
 import { convertFormDataToObject } from '../helpers/common'
 import { useStore } from 'vuex'
 
-const props = defineProps<{ item: object, parent: number }>()
+interface Props {
+  item: object
+  parent?: number
+}
 
-const emit = defineEmits<{
+interface Emits {
   (e: 'updated'): void
-}>()
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
 
 const store = useStore()
 

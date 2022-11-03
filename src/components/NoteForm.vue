@@ -27,7 +27,6 @@
       />
     </div>
 
-
     <div v-show="error" class="note-form__group">
       <div class="note-form__error">
         Заполните все поля!
@@ -42,56 +41,45 @@
   </form>
 </template>
 
-<script>
-import { ref } from 'vue'
+<script setup>
+import { ref, defineEmits, defineProps } from 'vue'
 import { convertFormDataToObject } from '../helpers/common'
 
-export default {
-  props: {
-    description: {
-      type: String,
-      default: ''
-    },
-
-    title: {
-      type: String,
-      default: ''
-    },
-
-    buttonName: {
-      type: String,
-      default: 'Создать'
-    }
+const props = defineProps({
+  description: {
+    type: String,
+    default: ''
   },
 
-  emits: ['submit'],
+  title: {
+    type: String,
+    default: ''
+  },
 
-  setup(props, { emit }) {
-    let error = ref(false)
-    let descriptionLocal = ref(props.description)
-    let titleLocal = ref(props.title)
+  buttonName: {
+    type: String,
+    default: 'Создать'
+  }
+})
 
-    function validate(e) {
-      error.value = false
-      const formData = convertFormDataToObject(new FormData(e.target));
+const emit = defineEmits(['submit'])
 
-      return !Object.values(formData).some((i) => i === '')
-    }
+let error = ref(false)
+let descriptionLocal = ref(props.description)
+let titleLocal = ref(props.title)
 
-    function submit(e) {
-      if (validate(e)) {
-        emit('submit', e)
-      } else {
-        error.value = true
-      }
-    }
+function validate(e) {
+  error.value = false
+  const formData = convertFormDataToObject(new FormData(e.target));
 
-    return {
-      submit,
-      error,
-      descriptionLocal,
-      titleLocal
-    }
+  return !Object.values(formData).some((i) => i === '')
+}
+
+function submit(e) {
+  if (validate(e)) {
+    emit('submit', e)
+  } else {
+    error.value = true
   }
 }
 </script>

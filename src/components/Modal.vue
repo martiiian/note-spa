@@ -10,10 +10,10 @@
   </div>
 </template>
 
-<script>
-export default {
-  emits: ['close']
-}
+<script setup>
+import { defineEmits } from 'vue'
+
+defineEmits(['close'])
 </script>
 
 <style lang="scss">

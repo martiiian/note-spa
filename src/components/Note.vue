@@ -26,32 +26,25 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import NoteBody from './NoteBody'
+import { defineProps, defineEmits } from 'vue'
 
-export default {
-  name: 'Note',
+defineProps({
+  note: {
+    type: Object,
+    required: true
+  }
+})
 
-  components: {
-    NoteBody
-  },
-
-  props: {
-    note: {
-      type: Object,
-      required: true
-    }
-  },
-
-  emits: [
-    'edit',
-    'delete',
-    'editChild',
-    'deleteChild',
-    'createChild',
-    'complete'
-  ],
-}
+defineEmits([
+  'edit',
+  'delete',
+  'editChild',
+  'deleteChild',
+  'createChild',
+  'complete'
+])
 </script>
 
 <style lang="scss">

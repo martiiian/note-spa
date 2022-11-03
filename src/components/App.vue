@@ -33,107 +33,86 @@
   </div>
 </template>
 
-<script>
-import { useStore } from 'vuex'
-import { computed, ref } from 'vue'
+<script setup>
+import '~/src/assets/styles/common.scss'
+import AreYouSure from './AreYouSure'
+import Modal from './Modal'
 import Note from './Note'
 import NoteCreateForm from './NoteCreateForm'
-import '~/src/assets/styles/common.scss'
-import Modal from './Modal'
 import NoteUpdateForm from './NoteUpdateForm'
-import AreYouSure from './AreYouSure'
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 
-export default {
-  components: {AreYouSure, NoteUpdateForm, Modal, NoteCreateForm, Note },
+const store = useStore()
 
-  setup() {
-    const store = useStore()
-    const createModalIsOpen = ref(false)
-    const editableItem = ref(null)
-    const parentForCreate = ref(null)
-    const areYouSure = ref(null)
+const areYouSure = ref(null)
+const createModalIsOpen = ref(false)
+const editableItem = ref(null)
+const parentForCreate = ref(null)
 
-    function createChild(parent) {
-      parentForCreate.value = parent
-      toggleCreateModal()
-    }
+function createChild(parent) {
+  parentForCreate.value = parent
+  toggleCreateModal()
+}
 
-    function removeEditableItem() {
-      editableItem.value = null
-    }
+function removeEditableItem() {
+  editableItem.value = null
+}
 
-    function toggleCreateModal() {
-      if (createModalIsOpen.value) {
-        parentForCreate.value = null
-      }
-
-      createModalIsOpen.value = !createModalIsOpen.value
-    }
-
-    function deleteChild(item) {
-      areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}"?`)
-        .then((isDelete) => {
-          if (isDelete) {
-            store.commit('subNotes/delete', item)
-          }
-        })
-    }
-
-    function editChild(item) {
-      editableItem.value = item
-    }
-
-    function deleteNote(item) {
-      areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
-        .then((isDelete) => {
-          if (isDelete) {
-            store.commit('notes/delete', item)
-            store.commit('subNotes/deleteByParent', item)
-          }
-        })
-    }
-
-    function edit(item) {
-      editableItem.value = item
-    }
-
-    function complete(item) {
-      if (item.parent) {
-        store.commit('subNotes/update', {
-          ...item,
-          isComplete: true
-        })
-      } else {
-        store.commit('notes/update', {
-          ...item,
-          isComplete: true
-        })
-      }
-    }
-
-    function notesWithChildren() {
-      return store.state.notes.all.map(note => ({
-        ...note,
-        subNotes: store.state.subNotes.all.filter((sn) => sn.parent === note.id)
-      }))
-    }
-
-    return {
-      complete,
-      createChild,
-      deleteChild,
-      deleteNote,
-      edit,
-      editChild,
-      removeEditableItem,
-      toggleCreateModal,
-      notesWithChildren: computed(notesWithChildren),
-      createModalIsOpen,
-      editableItem,
-      parentForCreate,
-      areYouSure
-    }
+function toggleCreateModal() {
+  if (createModalIsOpen.value) {
+    parentForCreate.value = null
   }
+
+  createModalIsOpen.value = !createModalIsOpen.value
+}
+
+function deleteChild(item) {
+  areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}"?`)
+    .then((isDelete) => {
+      if (isDelete) {
+        store.commit('subNotes/delete', item)
+      }
+    })
+}
+
+function editChild(item) {
+  editableItem.value = item
+}
+
+function deleteNote(item) {
+  areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
+    .then((isDelete) => {
+      if (isDelete) {
+        store.commit('notes/delete', item)
+        store.commit('subNotes/deleteByParent', item)
+      }
+    })
+}
+
+function edit(item) {
+  editableItem.value = item
+}
+
+function complete(item) {
+  if (item.parent) {
+    store.commit('subNotes/update', {
+      ...item,
+      isComplete: true
+    })
+  } else {
+    store.commit('notes/update', {
+      ...item,
+      isComplete: true
+    })
+  }
+}
+
+function notesWithChildren() {
+  return store.state.notes.all.map(note => ({
+    ...note,
+    subNotes: store.state.subNotes.all.filter((sn) => sn.parent === note.id)
+  }))
 }
 </script>
 

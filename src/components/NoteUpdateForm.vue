@@ -7,45 +7,40 @@
   />
 </template>
 
-<script>
+<script setup>
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
+import { defineEmits, defineProps } from 'vue'
 import { useStore } from 'vuex'
 
-export default {
-  components: { NoteForm },
-
+const props = defineProps({
   props: {
     item: {
       type: Object,
       required: true
     },
   },
+})
 
-  setup(props, { emit }) {
-    const store = useStore()
+const emit = defineEmits()
 
-    function update(e) {
-      const formData = convertFormDataToObject(new FormData(e.target));
+const store = useStore()
 
-      if (props.parent) {
-        store.commit('subNotes/update', {
-          ...props.item,
-          ...formData,
-        })
-      } else {
-        store.commit('notes/update', {
-          ...props.item,
-          ...formData,
-        })
-      }
+function update(e) {
+  const formData = convertFormDataToObject(new FormData(e.target));
 
-      emit('updated')
-    }
-
-    return {
-      update
-    }
+  if (props.parent) {
+    store.commit('subNotes/update', {
+      ...props.item,
+      ...formData,
+    })
+  } else {
+    store.commit('notes/update', {
+      ...props.item,
+      ...formData,
+    })
   }
+
+  emit('updated')
 }
 </script>

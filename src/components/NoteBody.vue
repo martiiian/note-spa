@@ -47,43 +47,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from 'vue'
+import { defineProps, defineEmits } from 'vue'
 
-export default {
-  props: {
-    title: {
-      type: String,
-      required: true
-    },
-    description: {
-      type: String,
-      required: true
-    },
-    isChild: {
-      type: Boolean,
-      default: false
-    },
-    isComplete: {
-      type: Boolean,
-      default: false
-    }
+defineProps({
+  title: {
+    type: String,
+    required: true
   },
-
-  emits: ['createChild', 'complete', 'delete', 'edit'],
-
-  setup() {
-    const menuIsOpen = ref(false)
-
-    function toggleMenu() {
-      menuIsOpen.value = !menuIsOpen.value
-    }
-
-    return {
-      toggleMenu,
-      menuIsOpen,
-    }
+  description: {
+    type: String,
+    required: true
+  },
+  isChild: {
+    type: Boolean,
+    default: false
+  },
+  isComplete: {
+    type: Boolean,
+    default: false
   }
+})
+
+defineEmits([
+  'createChild', 'complete', 'delete', 'edit'
+])
+
+const menuIsOpen = ref(false)
+
+function toggleMenu() {
+  menuIsOpen.value = !menuIsOpen.value
 }
 </script>
 
@@ -123,7 +117,6 @@ export default {
       }
     }
   }
-
 
   &__button {
     cursor: pointer;

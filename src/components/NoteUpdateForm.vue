@@ -7,26 +7,20 @@
   />
 </template>
 
-<script setup>
-import NoteForm from './NoteForm'
+<script lang="ts" setup>
+import NoteForm from './NoteForm.vue'
 import { convertFormDataToObject } from '../helpers/common'
-import { defineEmits, defineProps } from 'vue'
 import { useStore } from 'vuex'
 
-const props = defineProps({
-  props: {
-    item: {
-      type: Object,
-      required: true
-    },
-  },
-})
+const props = defineProps<{ item: object, parent: number }>()
 
-const emit = defineEmits()
+const emit = defineEmits<{
+  (e: 'updated'): void
+}>()
 
 const store = useStore()
 
-function update(e) {
+function update(e: any) {
   const formData = convertFormDataToObject(new FormData(e.target));
 
   if (props.parent) {

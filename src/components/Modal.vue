@@ -10,9 +10,7 @@
   </div>
 </template>
 
-<script setup>
-import { defineEmits } from 'vue'
-
+<script setup lang="ts">
 defineEmits(['close'])
 </script>
 

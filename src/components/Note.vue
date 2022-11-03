@@ -26,9 +26,8 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import NoteBody from './NoteBody'
-import { defineProps, defineEmits } from 'vue'
 
 defineProps({
   note: {

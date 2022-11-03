@@ -2,10 +2,9 @@
   <NoteForm @submit="create" />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
-import { defineEmits, defineProps } from 'vue'
 import { useStore } from 'vuex'
 const store = useStore()
 
@@ -18,9 +17,7 @@ const props = defineProps({
 
 const emit = defineEmits(['created'])
 
-defineEmits(['created'])
-
-function create(e) {
+function create(e: any) {
   const formData = convertFormDataToObject(new FormData(e.target));
 
   if (props.parent) {

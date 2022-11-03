@@ -4,7 +4,7 @@
  * @param formData
  * @returns {{[p: string]: any}}
  */
-export function convertFormDataToObject(formData) {
+export function convertFormDataToObject(formData: FormData) {
   return Object.fromEntries(formData.entries());
 }
 
@@ -14,6 +14,6 @@ export function convertFormDataToObject(formData) {
  * @param data
  * @returns {number}
  */
-export function getUniqueId(data) {
+export function getUniqueId(data: any[]): number {
   return Math.max(...data.map(i => i.id)) + 1
 }

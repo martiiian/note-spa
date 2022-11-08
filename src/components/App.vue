@@ -14,9 +14,9 @@
       Создать заметку
     </button>
 
-    <div v-if="notesWithChildren.length" class="notes">
+    <div v-if="notesStore.notesWithChildren.length" class="notes">
       <Note
-        v-for="note in notesWithChildren"
+        v-for="note in notesStore.notesWithChildren"
         :note="note"
         @delete="deleteNote"
         @edit="edit"
@@ -40,10 +40,12 @@ import Modal from './Modal'
 import Note from './Note'
 import NoteCreateForm from './NoteCreateForm'
 import NoteUpdateForm from './NoteUpdateForm'
-import { useStore } from 'vuex'
-import {computed, ref} from 'vue'
+import {ref} from 'vue'
+import {useNotesStore} from "../modules/notes";
+import {useSubNotesStore} from "../modules/sub-notes";
 
-const store = useStore()
+const notesStore = useNotesStore()
+const subNotesStore = useSubNotesStore()
 
 const areYouSure = ref<InstanceType<typeof AreYouSure> | null>(null)
 const createModalIsOpen = ref<boolean>(false)
@@ -70,7 +72,7 @@ function toggleCreateModal() {
 function deleteChild(item: ListItem) {
   areYouSure.value && areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}"?`)
     .then((isDelete: boolean) => {
-      isDelete && store.commit('subNotes/delete', item)
+      isDelete && subNotesStore.delete(item)
     })
 }
 
@@ -82,8 +84,8 @@ function deleteNote(item: ListItem) {
   areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
     .then((isDelete: boolean) => {
       if (isDelete) {
-        store.commit('notes/delete', item)
-        store.commit('subNotes/deleteByParent', item)
+        notesStore.delete(item)
+        subNotesStore.deleteByParent(item)
       }
     })
 }
@@ -94,24 +96,19 @@ function edit(item: ListItem) {
 
 function complete(item: ListItem) {
   if (item.parent) {
-    store.commit('subNotes/update', {
+    subNotesStore.update({
       ...item,
       isComplete: true
     })
   } else {
-    store.commit('notes/update', {
-      ...item,
+    notesStore.update({
+      id: item.id,
+      title: item.title,
+      description: item.description,
       isComplete: true
     })
   }
 }
-
-const notesWithChildren = computed(() => {
-  return store.state.notes.all.map(note => ({
-    ...note,
-    subNotes: store.state.subNotes.all.filter((sn) => sn.parent === note.id)
-  }))
-})
 </script>
 
 <style lang="scss">

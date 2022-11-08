@@ -10,11 +10,14 @@
 <script setup lang="ts">
 import NoteForm from './NoteForm.vue'
 import { convertFormDataToObject } from '../helpers/common'
-import { useStore } from 'vuex'
+import { useNotesStore } from "../modules/notes";
+import { useSubNotesStore } from "../modules/sub-notes";
+
+const subNotesStore = useSubNotesStore()
+const notesStore = useNotesStore()
 
 interface Props {
-  item: object
-  parent?: number
+  item: ListItem
 }
 
 interface Emits {
@@ -24,19 +27,18 @@ interface Emits {
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
 
-const store = useStore()
-
 function update(e: any) {
-  const formData = convertFormDataToObject(new FormData(e.target));
+  const formData = convertFormDataToObject(new FormData(e.target)) as Pick<ListItem, 'title' | 'description'>;
 
-  if (props.parent) {
-    store.commit('subNotes/update', {
+  if (props.item.parent) {
+    subNotesStore.update({
       ...props.item,
       ...formData,
     })
   } else {
-    store.commit('notes/update', {
-      ...props.item,
+    notesStore.update({
+      id: props.item.id,
+      isComplete: props.item.isComplete,
       ...formData,
     })
   }

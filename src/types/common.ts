@@ -5,7 +5,3 @@ declare interface ListItem {
   isComplete: boolean
   parent?: number
 }
-
-declare interface ListState {
-  all: ListItem[]
-}

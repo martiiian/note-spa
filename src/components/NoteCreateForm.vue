@@ -5,8 +5,11 @@
 <script setup lang="ts">
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
-import { useStore } from 'vuex'
-const store = useStore()
+import { useNotesStore } from "../modules/notes";
+import { useSubNotesStore } from "../modules/sub-notes";
+
+const subNotesStore = useSubNotesStore()
+const notesStore = useNotesStore()
 
 const props = defineProps({
   parent: {
@@ -18,15 +21,15 @@ const props = defineProps({
 const emit = defineEmits(['created'])
 
 function create(e: any) {
-  const formData = convertFormDataToObject(new FormData(e.target));
+  const formData = convertFormDataToObject(new FormData(e.target)) as Pick<ListItem, 'title' | 'description'>;
 
   if (props.parent) {
-    store.commit('subNotes/create', {
+    subNotesStore.create({
       ...formData,
       parent: props.parent.id
     })
   } else {
-    store.commit('notes/create', formData)
+    notesStore.create(formData)
   }
 
   emit('created')

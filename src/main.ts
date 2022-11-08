@@ -1,12 +1,11 @@
-import storeConfig from './store'
 import { createApp } from 'vue'
-import { createStore } from 'vuex'
+import { createPinia } from "pinia";
 import App from './components/App.vue'
 
 const main = createApp(App)
 
-const store = createStore(storeConfig)
+const pinia = createPinia()
 
-main.use(store)
+main.use(pinia)
 
 main.mount('#app')

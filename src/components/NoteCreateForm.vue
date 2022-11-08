@@ -5,8 +5,7 @@
 <script setup lang="ts">
 import NoteForm from './NoteForm'
 import { convertFormDataToObject } from '../helpers/common'
-import { useNotesStore } from "../modules/notes";
-import { useSubNotesStore } from "../modules/sub-notes";
+import { useNotesStore, useSubNotesStore } from "../store";
 
 const subNotesStore = useSubNotesStore()
 const notesStore = useNotesStore()

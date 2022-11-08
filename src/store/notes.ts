@@ -1,7 +1,7 @@
 import all from '~/src/data/notes.json'
 import { defineStore } from "pinia";
 import { getUniqueId } from "../helpers/common";
-import { useSubNotesStore } from "../modules/sub-notes";
+import { useSubNotesStore } from "./sub-notes";
 
 export const useNotesStore = defineStore('notes', {
   state: () => ({

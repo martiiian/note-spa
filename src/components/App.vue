@@ -41,8 +41,7 @@ import Note from './Note'
 import NoteCreateForm from './NoteCreateForm'
 import NoteUpdateForm from './NoteUpdateForm'
 import {ref} from 'vue'
-import {useNotesStore} from "../modules/notes";
-import {useSubNotesStore} from "../modules/sub-notes";
+import {useNotesStore, useSubNotesStore } from "../store";
 
 const notesStore = useNotesStore()
 const subNotesStore = useSubNotesStore()

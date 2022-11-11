@@ -1,33 +1,23 @@
-import all from '~/src/data/notes.json'
+import notesData from '~/src/data/notes.json'
 import { defineStore } from "pinia";
-import { getUniqueId } from "../helpers/common";
+import { deleteItem, update, create } from "./utils/actions";
 import { useSubNotesStore } from "./sub-notes";
 
+export interface State {
+  all: ListItem[]
+}
+
 export const useNotesStore = defineStore('notes', {
-  state: () => ({
-    all: all as ListItem[]
+  state: (): State => ({
+    all: notesData as ListItem[]
   }),
 
   actions: {
-    delete(item: ListItem) {
-      this.all = this.all.filter((i) => i.id !== item.id)
-    },
-
-    update(item: ListItem) {
-      this.all = this.all.map((i) =>
-        i.id === item.id ? item : i
-      )
-    },
-
-    create(data: Omit<ListItem, 'id' | 'isComplete'>) {
-      const id = getUniqueId(this.all)
-
-      this.all.push({
-        ...data,
-        isComplete: false,
-        id
-      })
-    },
+    ...{
+      delete: deleteItem,
+      update,
+      create
+    }
   },
 
   getters: {

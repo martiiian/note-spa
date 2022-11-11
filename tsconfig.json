@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "newLine": "LF",
     "outDir": "./lib/",
     "target": "esnext",

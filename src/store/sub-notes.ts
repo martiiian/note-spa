@@ -1,6 +1,6 @@
 import all from '~/src/data/sub-notes.json'
 import { defineStore } from "pinia";
-import { getUniqueId } from "../helpers/common";
+import { deleteItem, update, create } from "./utils/actions";
 
 export const useSubNotesStore = defineStore('sub-notes', {
   state: () => ({
@@ -8,24 +8,10 @@ export const useSubNotesStore = defineStore('sub-notes', {
   }),
 
   actions: {
-    delete(item: ListItem) {
-      this.all = this.all.filter((i) => i.id !== item.id)
-    },
-
-    update(item: ListItem) {
-      this.all = this.all.map((i) =>
-        i.id === item.id ? item : i
-      )
-    },
-
-    create(data: Omit<ListItem, 'id' | 'isComplete'>) {
-      const id = getUniqueId(this.all)
-
-      this.all.push({
-        ...data,
-        isComplete: false,
-        id
-      })
+    ...{
+      delete: deleteItem,
+      update,
+      create
     },
 
     deleteByParent(parent: ListItem) {

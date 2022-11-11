@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import NoteBody from './NoteBody'
+import NoteBody from './NoteBody.vue'
 
 defineProps({
   note: {

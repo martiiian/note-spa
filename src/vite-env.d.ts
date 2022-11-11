@@ -1,7 +1,9 @@
+/// <reference types="vite/client" />
+
 declare module '*.vue' {
-  import { Vue, VueConstructor } from 'vue/types/vue'
-  const _default: VueConstructor<Vue>
-  export default _default
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
 }
 
 declare module '*.png' {

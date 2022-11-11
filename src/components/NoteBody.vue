@@ -17,19 +17,19 @@
           class="note-body__complete note-body__button"
           @click="$emit('createChild')"
         >
-          <img :src="require('~/src/assets/images/add.svg')" alt="add child" />
+          <img src="@/assets/images/add.svg" alt="add child" />
         </button>
 
         <button class="note-body__complete note-body__button" @click="$emit('complete')">
-          <img :src="require('~/src/assets/images/check.svg')" alt="complete" />
+          <img src="@/assets/images/check.svg" alt="complete" />
         </button>
 
         <button class="note-body__del note-body__button" @click="$emit('delete')">
-          <img :src="require('~/src/assets/images/delete.svg')" alt="delete" />
+          <img src="@/assets/images/delete.svg" alt="delete" />
         </button>
 
         <button class="note-body__edit note-body__button" @click="$emit('edit')">
-          <img :src="require('~/src/assets/images/edit.svg')" alt="edit" />
+          <img src="@/assets/images/edit.svg" alt="edit" />
         </button>
       </div>
 
@@ -37,7 +37,7 @@
         class="note-body__button note-body__button_mobile-options"
         @click="toggleMenu"
       >
-        <img :src="require('~/src/assets/images/menu.svg')" alt="edit" />
+        <img src="@/assets/images/menu.svg" alt="edit" />
       </button>
     </div>
 

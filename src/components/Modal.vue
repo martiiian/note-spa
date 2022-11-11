@@ -2,7 +2,7 @@
   <div class="modal-wrapper">
     <div class="modal">
       <button class="modal__close-btn" @click="$emit('close')">
-        <img :src="require('~/src/assets/images/close.svg')" alt="close" />
+        <img src="@/assets/images/close.svg" alt="close" />
       </button>
 
       <slot />

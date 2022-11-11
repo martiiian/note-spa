@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import NoteForm from './NoteForm'
-import { convertFormDataToObject } from '../helpers/common'
+import NoteForm from './NoteForm.vue'
+import { convertFormDataToObject } from '@/helpers/common'
 import { useNotesStore, useSubNotesStore } from "../store";
 
 const subNotesStore = useSubNotesStore()

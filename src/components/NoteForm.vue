@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { convertFormDataToObject } from '../helpers/common'
+import { convertFormDataToObject } from '@/helpers/common'
 import { ref } from 'vue'
 
 interface Props {

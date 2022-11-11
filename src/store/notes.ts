@@ -1,4 +1,4 @@
-import notesData from '~/src/data/notes.json'
+import notesData from '@/data/notes.json'
 import { defineStore } from "pinia";
 import { deleteItem, update, create } from "./utils/actions";
 import { useSubNotesStore } from "./sub-notes";

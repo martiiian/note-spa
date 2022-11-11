@@ -34,14 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import '~/src/assets/styles/common.scss'
+import '@/assets/styles/common.scss'
 import AreYouSure from './AreYouSure.vue'
-import Modal from './Modal'
-import Note from './Note'
-import NoteCreateForm from './NoteCreateForm'
-import NoteUpdateForm from './NoteUpdateForm'
+import Modal from './Modal.vue'
+import Note from './Note.vue'
+import NoteCreateForm from './NoteCreateForm.vue'
+import NoteUpdateForm from './NoteUpdateForm.vue'
 import {ref} from 'vue'
-import {useNotesStore, useSubNotesStore } from "../store";
+import {useNotesStore, useSubNotesStore } from "@/store";
 
 const notesStore = useNotesStore()
 const subNotesStore = useSubNotesStore()

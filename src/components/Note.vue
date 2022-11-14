@@ -7,7 +7,7 @@
       :is-empty="note.subNotes.length === 0"
       @delete="$emit('delete', note)"
       @edit="$emit('edit', note)"
-      @complete="$emit('complete', note)"
+      @toggleComplete="$emit('toggleComplete', note)"
       @createChild="$emit('createChild', note)"
       @click="toggleCollapse"
     />
@@ -24,7 +24,7 @@
         :title="subNote.title"
         :is-complete="note.isComplete || subNote.isComplete"
         is-child
-        @complete="$emit('complete', subNote)"
+        @toggleComplete="$emit('toggleComplete', subNote)"
         @delete="$emit('deleteChild', subNote)"
         @edit="$emit('editChild', subNote)"
       />
@@ -49,7 +49,7 @@ defineEmits([
   'editChild',
   'deleteChild',
   'createChild',
-  'complete'
+  'toggleComplete'
 ])
 
 const collapsed = ref(true)

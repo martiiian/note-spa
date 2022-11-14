@@ -23,7 +23,7 @@
         @deleteChild="deleteChild"
         @editChild="editChild"
         @createChild="createChild"
-        @complete="complete"
+        @toggleComplete="toggleComplete"
       />
     </div>
 
@@ -93,18 +93,18 @@ function edit(item: ListItem) {
   editableItem.value = item
 }
 
-function complete(item: ListItem) {
+function toggleComplete(item: ListItem) {
   if (item.parent) {
     subNotesStore.update({
       ...item,
-      isComplete: true
+      isComplete: !item.isComplete
     })
   } else {
     notesStore.update({
       id: item.id,
       title: item.title,
       description: item.description,
-      isComplete: true
+      isComplete: !item.isComplete
     })
   }
 }

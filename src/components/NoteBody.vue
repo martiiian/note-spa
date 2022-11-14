@@ -27,7 +27,7 @@
 
         <button
           class="note-body__complete note-body__button"
-          @click.stop="$emit('complete')"
+          @click.stop="$emit('toggleComplete')"
         >
           <img src="@/assets/images/check.svg" alt="complete" />
         </button>
@@ -88,7 +88,7 @@ defineProps({
 })
 
 defineEmits([
-  'createChild', 'complete', 'delete', 'edit', 'click'
+  'createChild', 'toggleComplete', 'delete', 'edit', 'click'
 ])
 
 const menuIsOpen = ref(false)

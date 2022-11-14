@@ -1,10 +1,13 @@
-import all from '../data/sub-notes.json'
 import { defineStore } from "pinia";
 import { deleteItem, update, create } from "./utils/actions";
 
+export interface State {
+  all: ListItem[]
+}
+
 export const useSubNotesStore = defineStore('sub-notes', {
-  state: () => ({
-    all: all as ListItem[]
+  state: (): State => ({
+    all: []
   }),
 
   actions: {

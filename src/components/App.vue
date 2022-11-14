@@ -27,8 +27,16 @@
       />
     </div>
 
-    <div v-else>
-      Ничего не найдено
+    <div v-else class="not-found">
+      <p class="not-found__text">
+        Ничего не найдено<br>
+        создай свою первую заметку по кнопке выше.
+      </p>
+      <img
+        class="not-found__img"
+        src="@/assets/images/cat.png"
+        alt="кот ничего не найдено"
+      >
     </div>
   </div>
 </template>
@@ -118,6 +126,19 @@ function toggleComplete(item: ListItem) {
 
   &__create-note-btn {
     align-self: flex-end;
+  }
+}
+
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__img {
+    opacity: 0.2;
+  }
+  &__text {
+    font-size: 24px;
+    text-align: center;
   }
 }
 </style>

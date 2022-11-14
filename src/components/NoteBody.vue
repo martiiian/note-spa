@@ -1,7 +1,12 @@
 <template>
   <div
     class="note-body"
-    :class="{ 'note-body_is-child': isChild, 'note-body_is-complete': isComplete }"
+    :class="{
+      'note-body_is-child': isChild,
+      'note-body_is-complete': isComplete,
+      'note-body_is-empty': isEmpty
+    }"
+    @click="$emit('click')"
   >
     <div class="note-body__top">
       <div class="note-body__title">
@@ -15,27 +20,36 @@
         <button
           v-if="!isChild"
           class="note-body__complete note-body__button"
-          @click="$emit('createChild')"
+          @click.stop="$emit('createChild')"
         >
           <img src="@/assets/images/add.svg" alt="add child" />
         </button>
 
-        <button class="note-body__complete note-body__button" @click="$emit('complete')">
+        <button
+          class="note-body__complete note-body__button"
+          @click.stop="$emit('complete')"
+        >
           <img src="@/assets/images/check.svg" alt="complete" />
         </button>
 
-        <button class="note-body__del note-body__button" @click="$emit('delete')">
+        <button
+          class="note-body__del note-body__button"
+          @click.stop="$emit('delete')"
+        >
           <img src="@/assets/images/delete.svg" alt="delete" />
         </button>
 
-        <button class="note-body__edit note-body__button" @click="$emit('edit')">
+        <button
+          class="note-body__edit note-body__button"
+          @click.stop="$emit('edit')"
+        >
           <img src="@/assets/images/edit.svg" alt="edit" />
         </button>
       </div>
 
       <button
         class="note-body__button note-body__button_mobile-options"
-        @click="toggleMenu"
+        @click.stop="toggleMenu"
       >
         <img src="@/assets/images/menu.svg" alt="edit" />
       </button>
@@ -63,6 +77,10 @@ defineProps({
     type: Boolean,
     default: false
   },
+  isEmpty: {
+    type: Boolean,
+    default: false,
+  },
   isComplete: {
     type: Boolean,
     default: false
@@ -70,7 +88,7 @@ defineProps({
 })
 
 defineEmits([
-  'createChild', 'complete', 'delete', 'edit'
+  'createChild', 'complete', 'delete', 'edit', 'click'
 ])
 
 const menuIsOpen = ref(false)
@@ -87,8 +105,10 @@ function toggleMenu() {
   background: #ffffff;
   border-radius: 5px;
   border: 1px solid #cbcbcb;
+  cursor: pointer;
 
   &:hover {
+    background: #f9f9f9;
     .note-body__buttons {
       @media (min-width: 400px) {
         opacity: 1;
@@ -156,18 +176,33 @@ function toggleMenu() {
     color: #a5a3a3;
   }
 
+  &_is-empty {
+    cursor: default;
+    &:hover {
+      background: #ffffff;
+    }
+  }
+
   &_is-child {
     background: #efefef;
     border-radius: 0;
     border: none;
+    cursor: default;
     &:last-child {
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
+    }
+    &:hover {
+      background: #efefef;
     }
   }
 
   &_is-complete {
     background: #bdbdbd;
+    cursor: default;
+    &:hover {
+      background: #bdbdbd;
+    }
   }
 }
 </style>

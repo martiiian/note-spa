@@ -2,7 +2,7 @@
   <form class="note-form" @submit.prevent="submit">
     <div class="note-form__group">
       <label for="note-create-form_title">
-        Заголовок:
+        Заголовок:<sup class="note-form__asterisk">*</sup>
       </label>
 
       <input
@@ -16,7 +16,7 @@
 
     <div class="note-form__group">
       <label for="note-create-form_description">
-        Описание:
+        Описание:<sup class="note-form__asterisk">*</sup>
       </label>
 
       <textarea
@@ -100,6 +100,9 @@ function submit(e: SubmitEvent) {
     padding: 8px;
   }
   &__error {
+    color: red;
+  }
+  &__asterisk {
     color: red;
   }
 }

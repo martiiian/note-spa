@@ -1,4 +1,4 @@
-# Note SPA
+# Note SPA Frontend
 
 ## For dev start, run:
 ```sh

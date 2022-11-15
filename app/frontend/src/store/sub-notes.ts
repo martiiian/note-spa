@@ -1,5 +1,5 @@
-import { defineStore } from "pinia";
-import { deleteItem, update, create } from "./utils/actions";
+import { defineStore } from 'pinia'
+import { deleteItem, update, create } from './utils/actions'
 
 export interface State {
   all: ListItem[]

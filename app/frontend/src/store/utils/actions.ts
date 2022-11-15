@@ -1,5 +1,5 @@
-import { getUniqueId } from "../../helpers/common";
-import { State } from "../notes";
+import { getUniqueId } from '@/helpers/common'
+import { State } from '@/store/notes'
 
 export function deleteItem(this: State, item: ListItem) {
   this.all = this.all.filter((i) => i.id !== item.id)

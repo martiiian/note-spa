@@ -4,8 +4,8 @@
  * @param formData
  * @returns {{[p: string]: any}}
  */
-function convertFormDataToObject(formData: FormData): {[key: string]: any} {
-  return Object.fromEntries(formData.entries());
+function convertFormDataToObject(formData: FormData): {[key: string]: unknown} {
+  return Object.fromEntries(formData.entries())
 }
 
 /**
@@ -14,7 +14,7 @@ function convertFormDataToObject(formData: FormData): {[key: string]: any} {
  * @param data
  * @returns {number}
  */
-function getUniqueId(data: any[]): number {
+function getUniqueId<T extends ({[key: string]: unknown, id: number})[]>(data: T): number {
   return Math.max(...data.map(i => i.id)) + 1
 }
 

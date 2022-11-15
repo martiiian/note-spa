@@ -1,6 +1,6 @@
-import { defineStore } from "pinia";
-import { deleteItem, update, create } from "./utils/actions";
-import { useSubNotesStore } from "./sub-notes";
+import { defineStore } from 'pinia'
+import { deleteItem, update, create } from './utils/actions'
+import { useSubNotesStore } from './sub-notes'
 
 export interface State {
   all: ListItem[]

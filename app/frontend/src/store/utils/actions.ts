@@ -1,5 +1,6 @@
 import { getUniqueId } from '@/helpers/common'
 import { State } from '@/store/notes'
+import {ListItem} from '@/types/common'
 
 export function deleteItem(this: State, item: ListItem) {
   this.all = this.all.filter((i) => i.id !== item.id)

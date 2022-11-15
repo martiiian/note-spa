@@ -11,7 +11,8 @@
 <script setup lang="ts">
 import NoteForm from './NoteForm.vue'
 import { convertFormDataToObject } from '@/helpers/common'
-import { useNotesStore, useSubNotesStore } from "../store";
+import { useNotesStore, useSubNotesStore } from '@/store'
+import { ListItem } from '@/types/common'
 
 const subNotesStore = useSubNotesStore()
 const notesStore = useNotesStore()
@@ -26,8 +27,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['created'])
 
-function create(e: any) {
-  const formData = convertFormDataToObject(new FormData(e.target)) as Pick<ListItem, 'title' | 'description'>;
+function create(e: Event) {
+  const formData = convertFormDataToObject(new FormData(e.target as HTMLFormElement)) as Pick<ListItem, 'title' | 'description'>
 
   if (props.parent) {
     subNotesStore.create({

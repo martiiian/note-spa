@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { deleteItem, update, create } from './utils/actions'
+import { ListItem } from '@/types/common'
 
 export interface State {
   all: ListItem[]

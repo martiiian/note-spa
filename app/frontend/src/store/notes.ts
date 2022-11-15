@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { deleteItem, update, create } from './utils/actions'
 import { useSubNotesStore } from './sub-notes'
+import { ListItem } from '@/types/common'
 
 export interface State {
   all: ListItem[]

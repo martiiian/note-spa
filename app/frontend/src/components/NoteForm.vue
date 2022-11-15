@@ -71,7 +71,7 @@ function validate(e: SubmitEvent) {
   if (!e.target) return
 
   error.value = false
-  const formData = convertFormDataToObject(new FormData(e.target as HTMLFormElement));
+  const formData = convertFormDataToObject(new FormData(e.target as HTMLFormElement))
 
   return !Object.values(formData).some((i) => i === '')
 }

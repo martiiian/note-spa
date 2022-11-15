@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import NoteBody from './NoteBody.vue'
-import {ref} from "vue";
+import { ref } from 'vue'
 
 defineProps({
   note: {

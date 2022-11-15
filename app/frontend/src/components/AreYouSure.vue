@@ -13,58 +13,44 @@
   </Modal>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
-import Modal from './Modal.vue'
+import Modal from './UIModal.vue'
 
-export default {
-  components: { Modal },
+const text = ref('')
+const yesBtn = ref<HTMLButtonElement | null>(null)
+const noBtn = ref<HTMLButtonElement | null>(null)
 
-  setup() {
-    const text = ref('')
-    const yesBtn = ref<HTMLButtonElement | null>(null)
-    const noBtn = ref<HTMLButtonElement | null>(null)
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function confirm(srcText: string): Promise<boolean> {
+  text.value = srcText
 
-    function confirm(srcText: string): Promise<boolean> {
-      text.value = srcText
-
-      return new Promise((resolve) => {
-        function resetText() {
-          text.value = ''
-        }
-
-        function unsubscribe() {
-          yesBtn.value && yesBtn.value.removeEventListener('click', yesBtnCallback)
-          noBtn.value && noBtn.value.removeEventListener('click', yesBtnCallback)
-        }
-
-        function yesBtnCallback() {
-          unsubscribe()
-          resetText()
-          resolve(true)
-        }
-
-        function noBtnCallback() {
-          unsubscribe()
-          resetText()
-          resolve(false)
-        }
-
-        yesBtn.value && yesBtn.value.addEventListener('click', yesBtnCallback)
-        noBtn.value && noBtn.value.addEventListener('click', noBtnCallback)
-      })
+  return new Promise((resolve) => {
+    function resetText() {
+      text.value = ''
     }
 
-    return {
-      text,
-      yesBtn,
-      noBtn,
-      confirm
+    function unsubscribe() {
+      yesBtn.value && yesBtn.value.removeEventListener('click', yesBtnCallback)
+      noBtn.value && noBtn.value.removeEventListener('click', yesBtnCallback)
     }
-  }
+
+    function yesBtnCallback() {
+      unsubscribe()
+      resetText()
+      resolve(true)
+    }
+
+    function noBtnCallback() {
+      unsubscribe()
+      resetText()
+      resolve(false)
+    }
+
+    yesBtn.value && yesBtn.value.addEventListener('click', yesBtnCallback)
+    noBtn.value && noBtn.value.addEventListener('click', noBtnCallback)
+  })
 }
-
-
 </script>
 
 <style lang="scss">

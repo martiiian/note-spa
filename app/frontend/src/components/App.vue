@@ -17,6 +17,7 @@
     <div v-if="notesStore.notesWithChildren.length" class="notes">
       <Note
         v-for="note in notesStore.notesWithChildren"
+        :key="note.id"
         :note="note"
         @delete="deleteNote"
         @edit="edit"
@@ -42,14 +43,16 @@
 </template>
 
 <script setup lang="ts">
+/* eslint-disable no-undef */
 import '@/assets/styles/common.scss'
 import AreYouSure from './AreYouSure.vue'
-import Modal from './Modal.vue'
-import Note from './Note.vue'
+import Modal from './UIModal.vue'
+import Note from './UINote.vue'
 import NoteCreateForm from './NoteCreateForm.vue'
 import NoteUpdateForm from './NoteUpdateForm.vue'
-import {ref} from 'vue'
-import {useNotesStore, useSubNotesStore } from "@/store";
+import { ref } from 'vue'
+import { useNotesStore, useSubNotesStore } from '@/store'
+import { ListItem } from '@/types/common'
 
 const notesStore = useNotesStore()
 const subNotesStore = useSubNotesStore()
@@ -88,7 +91,7 @@ function editChild(item: ListItem) {
 }
 
 function deleteNote(item: ListItem) {
-  areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
+  areYouSure.value && areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
     .then((isDelete: boolean) => {
       if (isDelete) {
         notesStore.delete(item)

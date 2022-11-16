@@ -21,7 +21,6 @@ const text = ref('')
 const yesBtn = ref<HTMLButtonElement | null>(null)
 const noBtn = ref<HTMLButtonElement | null>(null)
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function confirm(srcText: string): Promise<boolean> {
   text.value = srcText
 
@@ -51,6 +50,10 @@ function confirm(srcText: string): Promise<boolean> {
     noBtn.value && noBtn.value.addEventListener('click', noBtnCallback)
   })
 }
+
+defineExpose({
+  confirm
+})
 </script>
 
 <style lang="scss">

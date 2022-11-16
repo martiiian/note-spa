@@ -25,6 +25,10 @@ app.use((req, res, next) => {
   next()
 })
 
+app.get('/hello', (req, res) => {
+  res.send('Hello world!')
+})
+
 server.listen(process.env.PORT, () => {
   console.log('Server started on', process.env.PORT)
 })

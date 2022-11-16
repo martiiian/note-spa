@@ -50,7 +50,7 @@ import Modal from './UIModal.vue'
 import Note from './UINote.vue'
 import NoteCreateForm from './NoteCreateForm.vue'
 import NoteUpdateForm from './NoteUpdateForm.vue'
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 import { useNotesStore, useSubNotesStore } from '@/store'
 import { ListItem } from '@/types/common'
 
@@ -80,7 +80,7 @@ function toggleCreateModal() {
 }
 
 function deleteChild(item: ListItem) {
-  areYouSure.value && areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}"?`)
+  areYouSure.value?.confirm(`Вы точно хотите удалить "${item.title}"?`)
     .then((isDelete: boolean) => {
       isDelete && subNotesStore.delete(item)
     })
@@ -91,7 +91,7 @@ function editChild(item: ListItem) {
 }
 
 function deleteNote(item: ListItem) {
-  areYouSure.value && areYouSure.value.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
+  areYouSure.value?.confirm(`Вы точно хотите удалить "${item.title}" и все его подзадачи?`)
     .then((isDelete: boolean) => {
       if (isDelete) {
         notesStore.delete(item)
@@ -119,6 +119,15 @@ function toggleComplete(item: ListItem) {
     })
   }
 }
+
+onBeforeMount(() => {
+  const { VITE_BACKEND_API: baseApi } = import.meta.env
+  fetch(`${baseApi}/hello`).then(res => {
+    return res.text()
+  }).then((data) => {
+    console.log(data)
+  })
+})
 </script>
 
 <style lang="scss">

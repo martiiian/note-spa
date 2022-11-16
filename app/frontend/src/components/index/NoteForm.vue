@@ -52,7 +52,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'submit', formData: SubmitEvent): void
+  (e: 'submit', formData: Event): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -67,7 +67,7 @@ let error = ref(false)
 let descriptionLocal = ref(props.description)
 let titleLocal = ref(props.title)
 
-function validate(e: SubmitEvent) {
+function validate(e: Event) {
   if (!e.target) return
 
   error.value = false
@@ -76,7 +76,7 @@ function validate(e: SubmitEvent) {
   return !Object.values(formData).some((i) => i === '')
 }
 
-function submit(e: SubmitEvent) {
+function submit(e: Event) {
   if (validate(e)) {
     emit('submit', e)
   } else {

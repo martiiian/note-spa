@@ -15,3 +15,7 @@ declare module '*.json' {
   const value: { [key: string]: unknown }
   export default value
 }
+
+declare interface ImportMetaEnv {
+  readonly VITE_BACKEND_API: string
+}

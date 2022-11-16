@@ -9,8 +9,11 @@
 
   <AreYouSure ref="areYouSure" />
 
-  <div class="app">
-    <button class="app__create-note-btn btn" @click="toggleCreateModal">
+  <div class="p-2.5 flex flex-col">
+    <button
+      class="font-mono bg-sky-800 hover:bg-sky-600 transition-colors rounded text-slate-50 p-2 px-4 self-end"
+      @click="toggleCreateModal"
+    >
       Создать заметку
     </button>
 
@@ -28,13 +31,13 @@
       />
     </div>
 
-    <div v-else class="not-found">
-      <p class="not-found__text">
+    <div v-else class="flex flex-col items-center">
+      <p class="text-2xl text-center">
         Ничего не найдено<br>
         создай свою первую заметку по кнопке выше.
       </p>
       <img
-        class="not-found__img"
+        class="opacity-20"
         src="@/assets/images/cat.png"
         alt="кот ничего не найдено"
       >
@@ -127,28 +130,3 @@ onBeforeMount(() => {
   })
 })
 </script>
-
-<style lang="scss">
-.app {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-
-  &__create-note-btn {
-    align-self: flex-end;
-  }
-}
-
-.not-found {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  &__img {
-    opacity: 0.2;
-  }
-  &__text {
-    font-size: 24px;
-    text-align: center;
-  }
-}
-</style>

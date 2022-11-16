@@ -43,7 +43,6 @@
 </template>
 
 <script setup lang="ts">
-import '@/assets/styles/common.scss'
 import AreYouSure from '@/components/AreYouSure.vue'
 import Modal from '@/components/UIModal.vue'
 import Note from '@/components/index/Note.vue'

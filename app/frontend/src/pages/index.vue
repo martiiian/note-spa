@@ -121,12 +121,16 @@ function toggleComplete(item: ListItem) {
   }
 }
 
-onBeforeMount(() => {
+function checkTempApi() {
   const { VITE_BACKEND_API: baseApi } = import.meta.env
   fetch(`${baseApi}/hello`).then(res => {
     return res.text()
   }).then((data) => {
     console.log(data)
   })
+}
+
+onBeforeMount(() => {
+  // checkTempApi()
 })
 </script>

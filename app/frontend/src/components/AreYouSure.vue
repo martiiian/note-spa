@@ -1,13 +1,26 @@
 <template>
-  <Modal v-show="text" @close="text = ''">
-    <div class="are-u-sure">
+  <Modal
+    v-show="text"
+    @close="text = ''"
+  >
+    <div>
       <p>
         {{ text }}
       </p>
 
-      <div class="are-u-sure__buttons">
-        <button class="btn btn_secondary are-u-sure__button" ref="noBtn">Нет</button>
-        <button class="btn are-u-sure__button" ref="yesBtn">Да</button>
+      <div class="flex justify-between pt-5">
+        <button
+          ref="noBtn"
+          class="btn btn_secondary"
+        >
+          Нет
+        </button>
+        <button
+          ref="yesBtn"
+          class="btn py-3 px-4"
+        >
+          Да
+        </button>
       </div>
     </div>
   </Modal>
@@ -55,16 +68,3 @@ defineExpose({
   confirm
 })
 </script>
-
-<style lang="scss">
-.are-u-sure {
-  &__buttons {
-    padding-top: 20px;
-    display: flex;
-    justify-content: space-between;
-  }
-  &__button {
-    padding: 10px 15px;
-  }
-}
-</style>

@@ -2,6 +2,7 @@ import * as http from 'http'
 
 import express = require('express')
 import cors = require('cors')
+import { router as authRouter } from './routes/auth'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config()
@@ -25,9 +26,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/hello', (req, res) => {
-  res.send('Hello world!')
-})
+app.use(authRouter)
 
 server.listen(process.env.PORT, () => {
   console.log('Server started on', process.env.PORT)

@@ -1,61 +1,58 @@
 <template>
   <div
-    class="note-body"
+    class="p-3 pl-4 w-full bg-white rounded-lg bg-gray-200 border border-gray-400 cursor-pointer hover:bg-white group"
     :class="{
-      'note-body_is-child': isChild,
-      'note-body_is-complete': isComplete,
-      'note-body_is-empty': isEmpty
+      'rounded-0 border-none cursor-default bg-gray-200 hover:bg-gray-200 last:rounded-b': isChild,
+      'cursor-default bg-gray-500 hover:bg-gray-500': isComplete,
+      'cursor-pointer hover:bg-white': isEmpty
     }"
     @click="$emit('click')"
   >
-    <div class="note-body__top">
-      <div class="note-body__title">
+    <div class="flex justify-between items-start">
+      <div class="text-cyan-900 grow">
         {{ title }}
       </div>
 
       <div
-        class="note-body__buttons"
-        :class="{ 'note-body__buttons_active': menuIsOpen }"
+        class="max-[400px]:opacity-0 max-[400px]:visible flex flex-nowrap shrink-0 opacity-0 transition-all delay-300 ease-in invisible group-hover:opacity-100 group-hover:visible"
+        :class="{ 'max-[400px]:opacity-100 visible': menuIsOpen }"
       >
-        <button
+        <UINoteBodyButton
           v-if="!isChild"
-          class="note-body__complete note-body__button"
-          @click.stop="$emit('createChild')"
-        >
-          <img src="@/assets/images/add.svg" alt="add child" />
-        </button>
+          img-src="/src/assets/images/add.svg"
+          alt="add child"
+          @click="$emit('create-child')"
+        />
 
-        <button
-          class="note-body__complete note-body__button"
-          @click.stop="$emit('toggleComplete')"
-        >
-          <img src="@/assets/images/check.svg" alt="complete" />
-        </button>
+        <UINoteBodyButton
+          img-src="/src/assets/images/check.svg"
+          alt="complete"
+          @click="$emit('toggle-complete')"
+        />
 
-        <button
-          class="note-body__del note-body__button"
-          @click.stop="$emit('delete')"
-        >
-          <img src="@/assets/images/delete.svg" alt="delete" />
-        </button>
+        <UINoteBodyButton
+          img-src="/src/assets/images/delete.svg"
+          alt="delete"
+          @click="$emit('delete')"
+        />
 
-        <button
-          class="note-body__edit note-body__button"
-          @click.stop="$emit('edit')"
-        >
-          <img src="@/assets/images/edit.svg" alt="edit" />
-        </button>
+        <UINoteBodyButton
+          img-src="/src/assets/images/edit.svg"
+          alt="delete"
+          @click="$emit('edit')"
+        />
       </div>
 
-      <button
-        class="note-body__button note-body__button_mobile-options"
-        @click.stop="toggleMenu"
-      >
-        <img src="@/assets/images/menu.svg" alt="edit" />
-      </button>
+
+      <UINoteBodyButton
+        class="hidden max-[400px]:block"
+        img-src="/src/assets/images/menu.svg"
+        alt="edit"
+        @click="toggleMenu"
+      />
     </div>
 
-    <div class="note-body__description">
+    <div class="bg-gray-500">
       {{ description }}
     </div>
   </div>
@@ -63,32 +60,22 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import UINoteBodyButton from '@/components/UINoteBodyButton.vue'
 
-defineProps({
-  title: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  isChild: {
-    type: Boolean,
-    default: false
-  },
-  isEmpty: {
-    type: Boolean,
-    default: false,
-  },
-  isComplete: {
-    type: Boolean,
-    default: false
-  }
+withDefaults(defineProps<{
+  title: string
+  description: string
+  isChild?: boolean
+  isEmpty?: boolean
+  isComplete?: boolean
+}>(), {
+  isChild: false,
+  isEmpty: false,
+  isComplete: false
 })
 
 defineEmits([
-  'createChild', 'toggleComplete', 'delete', 'edit', 'click'
+  'create-child', 'toggle-complete', 'delete', 'edit', 'click'
 ])
 
 const menuIsOpen = ref(false)
@@ -100,108 +87,12 @@ function toggleMenu() {
 
 <style lang="scss">
 .note-body {
-  padding: 10px 10px 10px 15px;
-  width: 100%;
-  background: #ffffff;
-  border-radius: 5px;
-  border: 1px solid #cbcbcb;
-  cursor: pointer;
-
   &:hover {
-    background: #f9f9f9;
     .note-body__buttons {
       @media (min-width: 400px) {
         opacity: 1;
         visibility: visible;
       }
-    }
-  }
-
-  &__buttons {
-    opacity: 0;
-    visibility: hidden;
-    transition: .3s ease-in;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-shrink: 0;
-    @media (max-width: 400px) {
-      opacity: 0;
-      visibility: visible;
-    }
-
-    &_active {
-      @media (max-width: 400px) {
-        opacity: 1;
-        visibility: visible;
-      }
-    }
-  }
-
-  &__button {
-    cursor: pointer;
-    background: none;
-    border: none;
-    margin-left: 10px;
-    transition: 0.3s opacity ease-in-out;
-
-    &:hover {
-      opacity: 0.8;
-    }
-
-    img {
-      height: 15px;
-      width: 15px;
-    }
-
-    &_mobile-options {
-      display: none;
-      @media (max-width: 400px) {
-        display: block;
-      }
-    }
-  }
-
-  &__top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  &__title {
-    color: #1b3854;
-    flex-grow: 1;
-  }
-
-  &__description {
-    color: #a5a3a3;
-  }
-
-  &_is-empty {
-    cursor: default;
-    &:hover {
-      background: #ffffff;
-    }
-  }
-
-  &_is-child {
-    background: #efefef;
-    border-radius: 0;
-    border: none;
-    cursor: default;
-    &:last-child {
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-    }
-    &:hover {
-      background: #efefef;
-    }
-  }
-
-  &_is-complete {
-    background: #bdbdbd;
-    cursor: default;
-    &:hover {
-      background: #bdbdbd;
     }
   }
 }

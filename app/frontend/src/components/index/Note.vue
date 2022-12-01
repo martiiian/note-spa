@@ -1,5 +1,5 @@
 <template>
-  <div class="note">
+  <div class="mx-0 my-4">
     <NoteBody
       :description="note.description"
       :title="note.title"
@@ -7,15 +7,15 @@
       :is-empty="note.subNotes.length === 0"
       @delete="$emit('delete', note)"
       @edit="$emit('edit', note)"
-      @toggleComplete="$emit('toggleComplete', note)"
-      @createChild="$emit('createChild', note)"
+      @toggle-complete="$emit('toggleComplete', note)"
+      @create-child="$emit('createChild', note)"
       @click="toggleCollapse"
     />
 
     <div
       v-if="note.subNotes.length"
-      class="note__sub-notes"
-      :class="{'note__sub-notes_collapsed': collapsed}"
+      class="pl-5 pr-1 overflow-hidden max-h-[1000px] transition-all ease-in-out duration-700"
+      :class="{'max-h-0 transition-all duration-300 ease-in': collapsed}"
     >
       <NoteBody
         v-for="subNote in note.subNotes"
@@ -24,7 +24,7 @@
         :title="subNote.title"
         :is-complete="note.isComplete || subNote.isComplete"
         is-child
-        @toggleComplete="$emit('toggleComplete', subNote)"
+        @toggle-complete="$emit('toggleComplete', subNote)"
         @delete="$emit('deleteChild', subNote)"
         @edit="$emit('editChild', subNote)"
       />
@@ -58,21 +58,3 @@ const toggleCollapse = () => {
   collapsed.value = !collapsed.value
 }
 </script>
-
-<style lang="scss">
-.note {
-  margin: 10px 0;
-  &__sub-notes {
-    padding-left: 20px;
-    padding-right: 5px;
-    overflow: hidden;
-    max-height: 1000px;
-    transition: max-height 1s ease-in-out;
-
-    &_collapsed {
-      max-height: 0;
-      transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
-    }
-  }
-}
-</style>

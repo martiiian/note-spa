@@ -1,10 +1,22 @@
 <template>
-  <Modal v-if="createModalIsOpen" @close="toggleCreateModal">
-    <NoteCreateForm :parent="parentForCreate" @created="toggleCreateModal" />
+  <Modal
+    v-if="createModalIsOpen"
+    @close="toggleCreateModal"
+  >
+    <NoteCreateForm
+      :parent="parentForCreate"
+      @created="toggleCreateModal"
+    />
   </Modal>
 
-  <Modal v-if="editableItem" @close="removeEditableItem">
-    <NoteUpdateForm :item="editableItem" @updated="removeEditableItem" />
+  <Modal
+    v-if="editableItem"
+    @close="removeEditableItem"
+  >
+    <NoteUpdateForm
+      :item="editableItem"
+      @updated="removeEditableItem"
+    />
   </Modal>
 
   <AreYouSure ref="areYouSure" />
@@ -17,21 +29,27 @@
       Создать заметку
     </button>
 
-    <div v-if="notesStore.notesWithChildren.length" class="notes">
+    <div
+      v-if="notesStore.notesWithChildren.length"
+      class="notes"
+    >
       <Note
         v-for="note in notesStore.notesWithChildren"
         :key="note.id"
         :note="note"
         @delete="deleteNote"
         @edit="edit"
-        @deleteChild="deleteChild"
-        @editChild="editChild"
-        @createChild="createChild"
-        @toggleComplete="toggleComplete"
+        @delete-child="deleteChild"
+        @edit-child="editChild"
+        @create-child="createChild"
+        @toggle-complete="toggleComplete"
       />
     </div>
 
-    <div v-else class="flex flex-col items-center">
+    <div
+      v-else
+      class="flex flex-col items-center"
+    >
       <p class="text-2xl text-center">
         Ничего не найдено<br>
         создай свою первую заметку по кнопке выше.

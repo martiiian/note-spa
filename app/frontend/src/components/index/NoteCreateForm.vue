@@ -1,9 +1,13 @@
 <template>
   <template v-if="parent">
     <h2>Создание дочерней заметки</h2>
-    <p class="note-create-form__title-desc">(для: {{ parent.title }})</p>
+    <p class="text-center">
+      (для: {{ parent.title }})
+    </p>
   </template>
-  <h2 v-else>Создание заметки</h2>
+  <h2 v-else>
+    Создание заметки
+  </h2>
 
   <NoteForm @submit="create" />
 </template>
@@ -17,13 +21,14 @@ import { ListItem } from '@/types/common'
 const subNotesStore = useSubNotesStore()
 const notesStore = useNotesStore()
 
-interface Props {
-  parent: ListItem | null
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  parent: null
-})
+const props = withDefaults(
+  defineProps<{
+    parent: ListItem | null
+  }>(), 
+  {
+    parent: null
+  }
+)
 
 const emit = defineEmits(['created'])
 
@@ -42,11 +47,3 @@ function create(e: Event) {
   emit('created')
 }
 </script>
-
-<style lang="scss" scoped>
-.note-create-form {
-  &__title-desc {
-    text-align: center;
-  }
-}
-</style>

@@ -60,7 +60,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import UINoteBodyButton from '@/components/UINoteBodyButton.vue'
+import UINoteBodyButton from '@/components/index/NoteBodyButton.vue'
 
 withDefaults(defineProps<{
   title: string

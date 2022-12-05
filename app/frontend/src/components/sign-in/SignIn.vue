@@ -41,8 +41,8 @@ function submit(e: Event) {
       return res.json()
     })
     .then((res) => {
-      if (res.result === 'success' && res.email) {
-        localStorage.setItem('email', res.email)
+      if (res.user && res.token) {
+        localStorage.setItem('token', res.token)
         router.push('/')
       } else {
         throw new Error()

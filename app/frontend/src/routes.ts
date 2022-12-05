@@ -32,7 +32,7 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isRegistered = localStorage.getItem('email')
+  const isRegistered = localStorage.getItem('token')
   if (typeof to.name !== 'string') return
 
   if (protectedRoutes.includes(to.name) && !isRegistered) {

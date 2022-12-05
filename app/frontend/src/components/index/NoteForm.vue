@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { convertFormDataToObject } from '@/helpers/common'
 import { ref } from 'vue'
-import UINoteInput from '@/components/UINoteInput.vue'
+import UINoteInput from '@/components/index/NoteInput.vue'
 
 interface Props {
   description?: string

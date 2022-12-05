@@ -7,47 +7,52 @@ import multer = require('multer')
 import jwt = require('jsonwebtoken')
 import bcrypt = require('bcryptjs')
 
-const router = express.Router()
 const { NODE_ENV, JWT_SECRET } = process.env
+const router = express.Router()
+const filePath = path.resolve(__dirname, '../db/users.csv')
 
 // todo: validation, error catching, authorization
 router.post('/signin', multer().none(), async (req, res) => {
   const { email, password } = req.body
 
-  const filePath = path.resolve(__dirname, '../db/users.csv')
-
   const rl = readline.createInterface({
     input: fsStandart.createReadStream(filePath),
     crlfDelay: Infinity,
   })
+  let responseSent = false
 
-  rl.on('line', (line) => {
+  rl.on('line', async (line) => {
     const [dbEmail, dbName, dbPassword] = line.split(',')
     if (dbEmail !== email) {
+      responseSent = true
+      res.status(422).send({ status: 'Email or password wrong' })
       rl.close()
       return
     }
 
-    bcrypt.compare(password, dbPassword)
-      .then((matched) => {
-        if (!matched) {
-          rl.close()
-          return
-        }
-        const token = jwt.sign(
-          { email },
-          NODE_ENV === 'production' ? JWT_SECRET as string : 'dev_secret',
-          { expiresIn: '7d' }
-        )
+    const isPasswordOk = await bcrypt.compare(password, dbPassword)
 
-        res.status(200).json({ user: { email, dbName }, token })
+    if (!isPasswordOk) {
+      responseSent = true
+      res.status(422).send({ status: 'Email or password wrong' })
+      rl.close()
+      return
+    }
 
-        rl.close()
-      })
+    const token = jwt.sign(
+      { email },
+      NODE_ENV === 'production' ? JWT_SECRET as string : 'dev_secret',
+      { expiresIn: '7d' }
+    )
+
+    res.status(200).json({ user: { email, dbName }, token })
+    responseSent = true
+
+    rl.close()
   })
 
   rl.on('close', () => {
-    // res.status(400).send()
+    if (!responseSent) res.status(400).send()
   })
 })
 

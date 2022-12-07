@@ -60,8 +60,6 @@ router.post('/signin', multer().none(), async (req, res) => {
 router.post('/signup', async (req, res) => {
   const { email, name, password } = req.body
 
-  const filePath = path.resolve(__dirname, '../db/users.csv')
-
   try {
     const hash = await bcrypt.hash(password, 10)
     // как в старые добрые, ага, ага

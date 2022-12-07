@@ -1,0 +1,14 @@
+### Create Note
+POST {{host}}/notes
+Accept: application/json
+Content-Type: application/json
+
+{
+  "title": "Biba note",
+  "description": "Biba note description",
+  "parent": ""
+}
+
+### Get all notes
+GET {{host}}/notes
+Accept: application/json

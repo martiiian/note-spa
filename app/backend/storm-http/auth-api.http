@@ -1,5 +1,5 @@
 ### Signin
-POST http://localhost:9900/signin
+POST {{host}}/signin
 Accept: application/json
 Content-Type: application/json
 
@@ -9,7 +9,7 @@ Content-Type: application/json
 }
 
 ### Signup
-POST http://localhost:9900/signup
+POST {{host}}/signup
 Accept: application/json
 Content-Type: application/json
 
